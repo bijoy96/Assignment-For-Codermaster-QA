@@ -1,0 +1,1 @@
+To run the file please import on Postman and run or you can run from cmd using newman also.

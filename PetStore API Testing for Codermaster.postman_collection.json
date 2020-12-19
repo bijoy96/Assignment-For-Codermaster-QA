@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "ac541c2b-b0fe-49bd-b021-8bcb28a5d82a",
+		"name": "PetStore API Testing for Codermaster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"random_User_Name\", _.random(1, 1000)+\"Name\")\r",
+							"\r",
+							"pm.globals.set(\"random_Pass\", _.random(1, 10000))\r",
+							"\r",
+							"pm.globals.set(\"random_ID\", _.random(1, 100))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Verify id\"] = responseBody.has(pm.globals.get(\"random_ID\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{random_ID}},\r\n  \"username\": \"{{random_User_Name}}\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"{{random_Pass}}\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}",
+					"host": [
+						"{{BaseURL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Verify id\"] = responseBody.has(pm.globals.get(\"random_ID\"));\r",
+							"tests[\"Verify UserName\"] = responseBody.has(pm.globals.get(\"random_User_Name\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/{{random_User_Name}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{random_User_Name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/login?username={{random_User_Name}}&password={{random_Pass}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{random_User_Name}}"
+						},
+						{
+							"key": "password",
+							"value": "{{random_Pass}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Verify Message\"] = responseBody.has(\"ok\");\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/logout",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Information Update",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"Updated_User_Name\", _.random(1, 1000)+\"UpdateName\")\r",
+							"\r",
+							"pm.globals.set(\"Updated_Pass\", _.random(1, 10000))\r",
+							"\r",
+							"pm.globals.set(\"Updated_ID\", _.random(1, 100))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Verify Updated id\"] = responseBody.has(pm.globals.get(\"Updated_ID\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{Updated_ID}},\r\n  \"username\": \"{{Updated_User_Name}}\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"{{Updated_Pass}}\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{random_User_Name}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{random_User_Name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Verify Updated id\"] = responseBody.has(pm.globals.get(\"Updated_User_Name\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/{{Updated_User_Name}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{Updated_User_Name}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
